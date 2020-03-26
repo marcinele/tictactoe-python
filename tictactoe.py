@@ -42,37 +42,45 @@ class Board:
         for i in range(2,4*self.size-1,4):
             for j in range(1, 2*self.size+1, 2):
                 temp_list_y.append(self.board[j][i])
-            self.check_of_check(temp_list_y, player1, player2)
+            if self.check_of_check(temp_list_y, player1, player2) == None:
+                return
             temp_list_y = []
         for i in range(1, 2*self.size+1, 2):
             for j in range(2,4*self.size-1,4):
                 temp_list_x.append(self.board[i][j])
-            self.check_of_check(temp_list_x, player1, player2)
+            if self.check_of_check(temp_list_x, player1, player2) == None:
+                return
             temp_list_x = []
         temp_list_y.append(self.board[1][2])
         temp_list_y.append(self.board[3][6])
         temp_list_y.append(self.board[5][10])
-        self.check_of_check(temp_list_y, player1, player2)
+        if self.check_of_check(temp_list_y, player1, player2) == None:
+            return
         temp_list_x.append(self.board[1][10])
         temp_list_x.append(self.board[3][6])
         temp_list_x.append(self.board[5][2])
-        self.check_of_check(temp_list_x, player1, player2)
+        if self.check_of_check(temp_list_x, player1, player2) == None:
+            return
         temp_list_x = []
         if self.free_moves == []:
             config.window_refresh(self)
             print("Draw...")
             self.finished = True
+            return
 
     def check_of_check(self, temp_list, player1, player2):
         if temp_list.count(player1.sign) == len(temp_list):
             config.window_refresh(self)
             print("Game over. Player ", player1.number, " (", player1.sign, ") won.")
             self.finished = True
+            return None
         elif temp_list.count(player2.sign) == len(temp_list):
             config.window_refresh(self)
             print("Game over. Player ", player2.number, " (", player2.sign, ") won.")
             self.finished = True
+            return None
         temp_list = []
+        return 1
 
 
 
